@@ -1,0 +1,142 @@
+
+<%- include('../inc/top') %>
+
+            
+            <h3 class="listU">Products</h3>
+            <div class="col-12 bg-success-subtle ">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="col-12">
+                       
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle bg-dark-subtle"  href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Sort
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Tên A-Z</a></li>
+                                        <li><a class="dropdown-item" href="#">Tên Z-A</a></li>
+                                        <li><a class="dropdown-item" href="#">Giá thấp - cao</a></li>
+                                        <li><a class="dropdown-item" href="#">Giá cao - thấp</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle bg-dark-subtle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Filter
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Laptop</a></li>
+                                        <li><a class="dropdown-item" href="#">Phone</a></li>
+
+                                        
+                                    </ul>
+                                </li>
+                                
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Banner</a></li>
+                                        <li><a class="dropdown-item" href="#">Info</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search"
+                                    aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                            <a class="btn btn-outline-success" href="products/addProduct">New</a>                         
+                        </div>
+                    </div>
+                </nav>
+            </div>
+           
+            
+            
+            <div class="col-12">
+               
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th  scope="col">ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col">Cost</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% products.forEach(function(product) { %>
+                        <tr> 
+                            <th scope="row"> <%= product.id %> </th>
+                            <td> <%= product.cat%> </td>
+                            <td> <%= product.name %> </td>
+                            <td>
+                                <img src="<%=product.image %>" alt="" width="150px" height="100px">
+                            </td>
+                            
+                            <td> <%= product.comment %> </td>
+                            <td> <%= product.cost%> </td>
+                            <td> 
+                                <button class="btn bg-success-subtle">Edit</button>
+                                <button class="btn bg-dark-subtle">Delete</button>
+    
+                            </td>
+                        </tr>
+                    <% }); %>
+                    
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+
+            <div class="col-3">
+                <div >
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                </div>
+            
+            </div>
+            
+            
+        </div>
+
+      <!-- Js -->
+
+
+        <script>
+          function AddPro(){
+            document.getElementById('formadd').style.display="block";
+            console.log('Clickme show');
+          }
+          function outForm(){
+            document.getElementById('formadd').style.display="none";
+            console.log('Click out');
+          }
+        </script>
+
+
+<%- include('../inc/bot') %>
