@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>ASM</title>
     <link rel="stylesheet" href="../bootstarp/css/bootstrap.min.css">
     <style>
       
@@ -13,9 +13,7 @@
 </head>
 <body>
     <div class="container-fluid ">
-        <div class="col-12">
-          <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/03/banner/1200X44-copy-1200x44.png" alt="" width="100%">
-        </div> 
+        
         <div class="col-12 ">
             <div >
                 <nav class="navbar navbar-expand-lg bg-success-subtle">
@@ -23,47 +21,39 @@
                         
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <% if(user.length>0){ %>
+                                    <p class="nav-link active fs-6"><%= user %></p>
+                                 <% } %>
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="index">Home</a>
+                                    <a class="nav-link active" aria-current="page" href="/">Home</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="users">Users</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="products">Products</a>
-                                </li>
+                                <% if(user.length>0 && user=="admin"){ %>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="/users">Users</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="/category">Categorys</a>
+                                    </li>
+                                 <% } %>
                                 
-                                <!-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        Users
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="account/listUser">User</a></li>
-                                        <li><a class="dropdown-item" href="#">Group</a></li>
-                                        <li><a class="dropdown-item" href="#">Role</a></li>
-                                    </ul>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/products">Products</a>
                                 </li>
+
+                                
+                                
+                               
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        Products
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="products/listProduct">Product</a></li>
-                                        <li><a class="dropdown-item" href="#">Category</a></li>
-                                        <li><a class="dropdown-item" href="#">Tag</a></li>
-                                    </ul>
-                                </li> -->
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                    <a class="nav-link dropdown-toggle" href="/" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         Settings
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="users/login">Login/Logout</a></li>
-                                        <li><a class="dropdown-item" href="users/signup">SignUp</a></li>
-                                        <li><a class="dropdown-item" href="users/changePass">Change PassWord</a></li>
+                                        <li><a class="dropdown-item" href="/users/login">Login</a></li>
+                                        <li><a class="dropdown-item" href="/users/signup">SignUp</a></li>
+                                        <li><a class="dropdown-item" href="/users/changePass">Change PassWord</a></li>
+                                        <li><a class="dropdown-item" href="/users/logout">Logout</a></li>
+
 
                                     </ul>
                                 </li>

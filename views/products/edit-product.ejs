@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update Product</title>
+    <link rel="stylesheet" href="/bootstarp/css/bootstrap.min.css">
+  </head>
+  <body>
+
+    <div class="container pt-5">
+      <div id="formadd" class="col-6 m-auto bg-success-subtle p-2 ">
+        <form method="post" action="" enctype="multipart/form-data">
+            <h3 style="color: blue;" >Update Product</h3>
+            <% if(msg.length>0){ %>
+                <p class="alert alert-info"> <%= msg %></p>
+             <% } %>
+            <div class="mb-3">
+                <label for="tensp" class="form-label">Tên Sản phẩm</label>
+                <input type="text" class="form-control" id="tensp" name="name" value="<%= objSP.name  %>"
+                    >
+
+            </div>
+            
+            <label class="form-label">Category</label>
+            
+            <select class="form-select" name="category">
+                <% listCat.forEach(cat => {   %>
+                    <option value="<%= cat._id %>"> <%= cat.name %></option>
+               <% }); %>
+                
+            </select>
+           
+            <div class="mb-3">
+                <label for="mota" class="form-label">Mô tả</label>
+                <input type="text" class="form-control" id="mota" name="description" value="<%= objSP.description  %>">
+                
+            </div>
+            <div class="mb-3">
+                <label for="gia" class="form-label">Giá</label>
+                <input type="number" class="form-control" id="gia" name="price" value="<%= objSP.price  %>">
+            </div>
+            <div class="mb-3">
+                <label for="hinhanh" class="form-label">Hình ảnh</label>
+            
+                    <input class="form-control" type="file" name="file_anh">
+               
+            </div>
+            <button type="submit" class="btn m-1  btn-outline-danger" >Save</button>
+            <button type="submit" class="btn m-1  btn-outline-danger" onclick="outForm">Cancel</button>
+
+            
+        </form>
+    </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="../bootstarp/js/bootstrap.min.js"></script>  </body>
+</html>

@@ -25,23 +25,27 @@
 <body>
     
     <div class="col-1"><h2>LOGIN</h2></div>
+    <% if(msg.length>0){ %>
+        <p class="alert alert-info"> <%= msg %></p>
+     <% } %>
     <div class="col-6">
         
-        <form>
+        <form method="post" action="">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username">
+                <input type="text" class="form-control" id="username" name="username">
               </div>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1">
+              <input type="password" class="form-control" id="exam
+              pleInputPassword1" name="passwd">
             </div>
             <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1">
               <label class="form-check-label" for="exampleCheck1">Remember me</label>
             </div>
             <div>
-                <a href="#">You don't have an account?</a>
+                <a href="signup">You don't have an account?</a>
             </div>
             <button type="submit" class="btn btn-outline-success" id="btn_log">Login</button>
           </form>

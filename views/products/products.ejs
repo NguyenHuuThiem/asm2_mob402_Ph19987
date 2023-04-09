@@ -16,10 +16,8 @@
                                         Sort
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Tên A-Z</a></li>
-                                        <li><a class="dropdown-item" href="#">Tên Z-A</a></li>
-                                        <li><a class="dropdown-item" href="#">Giá thấp - cao</a></li>
-                                        <li><a class="dropdown-item" href="#">Giá cao - thấp</a></li>
+                                        <li><a class="dropdown-item" href="/products/pricetang">Giá thấp - cao</a></li>
+                                        <li><a class="dropdown-item" href="/products/pricegiam">Giá cao - thấp</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -28,8 +26,8 @@
                                         Filter
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Laptop</a></li>
-                                        <li><a class="dropdown-item" href="#">Phone</a></li>
+                                        <li><a class="dropdown-item" href="/products/dienthoai">Điện thoại</a></li>
+                                        <li><a class="dropdown-item" href="/products/maytinh">Máy tính</a></li>
 
                                         
                                     </ul>
@@ -46,7 +44,10 @@
                                     aria-label="Search">
                                 <button class="btn btn-outline-success" type="submit">Search</button>
                             </form>
-                            <a class="btn btn-outline-success" href="products/addProduct">New</a>                         
+                            <% if(user=="admin"){ %>
+                                <a class="btn btn-outline-success" href="products/addProduct">New</a>
+                                <% } %>
+                                                    
                         </div>
                     </div>
                 </nav>
@@ -57,35 +58,32 @@
             <div class="col-12">
                
         <div class="col-12">
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th  scope="col">ID</th>
-                        <th scope="col">Category</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Comment</th>
-                        <th scope="col">Cost</th>
-                        <th scope="col"></th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
 
                     <% products.forEach(function(product) { %>
                         <tr> 
-                            <th scope="row"> <%= product.id %> </th>
-                            <td> <%= product.cat%> </td>
-                            <td> <%= product.name %> </td>
-                            <td>
-                                <img src="<%=product.image %>" alt="" width="150px" height="100px">
-                            </td>
+                            <th scope="row"><%= product._id %></th>
+                            <td> <a href="/products/detail/<%= product._id %>"><%= product.name %></a></td>
+                            <td><%= product.price%></td>
+                            <td><%= product.id_cat ? product.id_cat.name : '' %></td>
+
+                  
                             
-                            <td> <%= product.comment %> </td>
-                            <td> <%= product.cost%> </td>
                             <td> 
-                                <button class="btn bg-success-subtle">Edit</button>
-                                <button class="btn bg-dark-subtle">Delete</button>
-    
+                                <a href="/products/edit/<%= product._id %>" class="btn bg-success-subtle">Edit</a>
+                                <a href="/products/delete/<%= product._id %>" class="btn bg-dark-subtle">Delete</a>
+                                
                             </td>
                         </tr>
                     <% }); %>

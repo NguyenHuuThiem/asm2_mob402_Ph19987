@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/bootstarp/css/bootstrap.min.css">
+    <style>
+      
+    </style>
+
+</head>
+<body>
+    <div class="container-fluid ">
+        <h1>Chi tiết</h1>
+        <h2><%= cate %></h2>
+        <div class="col-12">
+            <table class="table">
+    
+                <tr>
+                    <th  scope="col">ID</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                </tr>
+        
+                <tr> 
+                    <th scope="row"><%= objSP._id %></th>
+                    <td><%= cate %></td>
+                    <td><%= objSP.name %></td>
+                    <td>
+                        <img src="<%=objSP.image %>" alt="" width="150px" height="100px">
+                    </td>
+                    
+                    <td><%= objSP.description %></td>
+                    <td><%= objSP.price%></td>
+                </tr>
+        </div>
+       
+        
+    </div>
+
+<%- include('../inc/bot') %>

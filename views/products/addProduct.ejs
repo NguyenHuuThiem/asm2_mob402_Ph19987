@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Add Product</title>
-    <link rel="stylesheet" href="../bootstarp/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstarp/css/bootstrap.min.css">
+    <link rel="stylesheet" href="">
   </head>
   <body>
 
@@ -12,25 +13,33 @@
       <div id="formadd" class="col-6 m-auto bg-success-subtle p-2 ">
         <form method="post" action="" enctype="multipart/form-data">
             <h3 style="color: blue;" >New Product</h3>
+            <% if(msg.length>0){ %>
+                <p class="alert alert-info"> <%= msg %></p>
+             <% } %>
             <div class="mb-3">
                 <label for="tensp" class="form-label">Tên Sản phẩm</label>
-                <input type="text" class="form-control" id="tensp" name="tensp"
+                <input type="text" class="form-control" id="tensp" name="name"
                     >
 
             </div>
-            <div class="mb-3">
-                <label for="loai" class="form-label">Loại</label>
-                <input type="text" class="form-control" id="loai" name="loai">
-            </div>
+            
+            <label class="form-label">Category</label>
+            
+            <select class="form-select" name="category">
+                <% listCat.forEach(cat => {   %>
+                    <option value="<%= cat._id %>"> <%= cat.name %></option>
+               <% }); %>
+                
+            </select>
            
             <div class="mb-3">
                 <label for="mota" class="form-label">Mô tả</label>
-                <input type="text" class="form-control" id="mota" name="mota">
+                <input type="text" class="form-control" id="mota" name="description">
                 
             </div>
             <div class="mb-3">
                 <label for="gia" class="form-label">Giá</label>
-                <input type="number" class="form-control" id="gia" name="gia">
+                <input type="number" class="form-control" id="gia" name="price">
             </div>
             <div class="mb-3">
                 <label for="hinhanh" class="form-label">Hình ảnh</label>

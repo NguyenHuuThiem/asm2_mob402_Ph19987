@@ -3,10 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 
 var homeRouter = require('./routes/home');
 var accRouter= require('./routes/account');
 var productsRouter= require('./routes/products');
+var catRouter = require('./routes/category');
 
 
 var app = express();
@@ -20,12 +22,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret:'kjasfiuhsjvbiub8ew8fbffy7f3vds', // chuỗi ký tự đặc biệt để Session mã hóa, tự viết
+  resave:true,
+  saveUninitialized:true
+ }));
+
 
 app.use('/', homeRouter);
-
 app.use('/users',accRouter);
 app.use('/products',productsRouter);
-
+app.use('/category', catRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

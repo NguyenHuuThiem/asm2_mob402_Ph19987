@@ -1,36 +1,171 @@
-exports.getListProduct=(req,res,next)=>{
-    let products=[
-        {id:1,cat:"Laptop", name:"Lenovo IdeaPab 3", image:"https://laptop88.vn/media/product/6631_81ew197c0rl__ac_sl1500_.jpg", comment:"Sản phẩm mới 100 % bảo hành 3 năm", cost:17000000 },
-        {id:2, cat:"Phone", name:"Iphone 14 pro Max", image:"https://www.apple.com/v/iphone-14-pro/d/images/meta/iphone-14-pro_overview__3dn6st99cpea_og.png?202303062200", comment:"Sản phẩm mới 100 % bảo hành 1 năm", cost:35000000 },
-        {id:3, cat:"Phone", name:"SamSung Galaxy Y", image:"https://cdn.tgdd.vn/Products/Images/42/50166/samsung-galaxy-y-s5360-nowatermark-300x300.jpg", comment:"Sản phẩm đã qua sử dụng 95%", cost:300000 },
-        {id:4, cat:"Laptop",name:"Acer nitro 5", image:"https://no1computer.vn/images/products/2022/11/30/large/acer-nitro-5-rtx-3050-h1_1669799440.jpg", comment:"Sản phẩm mới 100 % bảo hành 3 năm", cost:20000000 },
+const myMD= require('../models/product.model');
 
-    ]
-    res.render('products/products', {products:products});
+exports.getListProduct=async(req,res,next)=>{
+   // thêm chức năng lọc
+   let user ="";
+    if(req.session.userLogin){
+        user= req.session.userLogin.username;
+    }
+   let dieu_kien_loc= null;
+   // giả sử lọc theo giá tiền
+   if(typeof(  req.query.price) !='undefined'){
+       dieu_kien_loc={price: req.query.price};
+   }
+
+   var listSP = await myMD.spModel.find(   dieu_kien_loc   )
+                                   .populate('id_cat','_id, name');
+   console.log(listSP);
+
+    res.render('products/products', {products:listSP, user:user});
 };
+
 
 var fs = require('fs');
-exports.add= (req, res, next)=>{
+exports.add= async(req, res, next)=>{
+    let msg='';
     console.log(req.file, req.body);
+    let listCat = await myMD.catModel.find();
     if(req.method=='POST'){
-        //xử lý file upload
-        //di chuyển file từ thư mục tmp sang public/ uploads
-        // fs.rename(đường dẫn gốc, đường dẫn mới, callback)
 
         fs.rename(req.file.path,
-                    './public/templates/'+req.file.originalname,
-                    (err)=>{
-                        if(err)
-                            console.log(err);
-                        else {
-                            console.log("Url : http://localhost:3000/templates/"+res.file.originalname);
-                        }
+            './public/templates/'+ req.file.originalname,
+            (err)=>{
+               if(err)
+                   console.log(err);
+               else{
+                   // không có lỗi, tạo url, bỏ chữ public/
+               console.log("Url: http://localhost:3000/templates/" +req.file.originalname );
+               }
+            }) 
 
-        })
-    }
-
-
-    res.render('products/addProduct');
+            let objSP= new myMD.spModel();
+            objSP.name= req.body.name;
+            objSP.price= req.body.price;
+            objSP.description= req.body.description;
+            objSP.image= "http://localhost:3000/templates/"+req.file.originalname ;
+            objSP.id_cat= req.body.category;
+            
+            try {
+                let new_sp= await objSP.save();
+                console.log(new_sp);
+                msg="Đã thêm thành công";
+                
+            } catch (error) {
+                msg="Lỗi :"+error.message;
+                console.log(error);
+            }
+        }
+    res.render('products/addProduct', {msg:msg, listCat:listCat});
 };
 
+exports.detail=async(req,res,next)=>{
+    let idsp = req.params.idsp;
+    let msg='';
+    let cate= '';
+    try {
+        var objSP= await myMD.spModel.findById(idsp).populate('id_cat','_id, name');
+        console.log(objSP);
+        cate=objSP.id_cat.name;
+        console.log(cate);
 
+       
+        
+    } catch (error) {
+        msg='Lỗi '+ error.message;
+    }
+   
+     res.render('products/detail', {objSP:objSP, msg :msg, cate:cate});
+ };
+
+ exports.delete= async(req,res,next)=>{
+    let idsp = req.params.idsp;
+    let msg='';
+    try {
+      await myMD.spModel.deleteOne({_id:idsp});
+        msg= "Đã Xóa";
+        
+    } catch (error) {
+        msg='Lỗi '+ error.message;
+    }
+   
+     res.render('products/delete-product', { msg :msg});
+ };
+
+ exports.edit= async (req,res, next)=>{
+    let msg= '';
+    let idsp = req.params.idsp;
+    try {
+        var objSP= await myMD.spModel.findById(idsp);
+        var listCat = await myMD.catModel.find();
+
+        
+       
+        
+    } catch (error) {
+        msg='Lỗi '+ error.message;
+    }
+    
+   
+    if(req.method=='POST'){
+
+        fs.rename(req.file.path,
+            './public/templates/'+ req.file.originalname,
+            (err)=>{
+               if(err)
+                   console.log(err);
+               else{
+                   // không có lỗi, tạo url, bỏ chữ public/
+               console.log("Url: http://localhost:3000/templates/" +req.file.originalname );
+               }
+            }) 
+
+            let objSP= new myMD.spModel();
+            objSP.name= req.body.name;
+            objSP.price= req.body.price;
+            objSP.description= req.body.description;
+            objSP.image= "http://localhost:3000/templates/"+req.file.originalname ;
+            objSP.id_cat= req.body.category;
+            objSP._id=idsp
+            
+            try {
+                await myMD.spModel.findByIdAndUpdate({_id: idsp}, objSP)
+              
+                msg="ĐÃ Sửa thành công";
+            } catch (error) {
+                msg="Lỗi :"+error.message;
+                console.log(error);
+            }
+        }
+   
+    res.render('products/edit-product', {msg:msg, objSP: objSP, listCat:listCat,  });
+ }
+ exports.filter= async (req,res,next)=>{
+    let user ="";
+    var listSP=[];
+    if(req.session.userLogin){
+        user= req.session.userLogin.username;
+    }
+    let msg= '';
+   if(req.params.filter=="dienthoai"){
+        dieukien={id_cat:"6428940cbe7605e291c85dc3"};
+        listSP = await myMD.spModel.find(dieukien)
+        .populate('id_cat','_id, name');
+   }else if(req.params.filter=="maytinh"){
+        dieukien={id_cat:"64289420be7605e291c85dc4"};
+        listSP = await myMD.spModel.find(dieukien)
+        .populate('id_cat','_id, name');
+   } else if(req.params.filter=="pricetang"){
+         listSP = await myMD.spModel.find().sort({price:1})
+        .populate('id_cat','_id, name');
+    } else if(req.params.filter=="pricegiam"){
+        listSP = await myMD.spModel.find().sort({price:-1})
+        .populate('id_cat','_id, name');
+    } 
+   
+  
+
+  
+   console.log(listSP);
+   res.render('products/products',{products:listSP, msg:msg,user:user})
+
+ }

@@ -1,0 +1,72 @@
+
+<%- include('../inc/top') %>
+
+            
+            <h3 class="listU">CATEGORY</h3>
+            <% if(msg.length>0){ %>
+                <p class="alert alert-info"> <%= msg %></p>
+             <% } %>
+            
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th  scope="col">ID</th>
+                        <th scope="col">Category</th>
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% cats.forEach(function(c) { %>
+                        <tr> 
+                            <th scope="row"><%= c._id %></th>
+                            <td><%= c.name %></td>
+                            
+                            
+                            <td> 
+                                <a href="/category/edit/<%= c._id %>" class="btn bg-success-subtle">Edit</a>
+                                <a href="/category/delete/<%= c._id %>" class="btn bg-dark-subtle">Delete</a>
+                                
+                            </td>
+                        </tr>
+                    <% }); %>
+                    
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+
+            <div class="col-3">
+                <div >
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                </div>
+            
+            </div>
+            
+            
+        </div>
+
+
+
+<%- include('../inc/bot') %>

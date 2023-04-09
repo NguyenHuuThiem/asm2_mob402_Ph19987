@@ -40,15 +40,13 @@
                             </ul>
                             <form class="d-flex" role="search">
                                 <input class="form-control me-2" type="search" placeholder="Search"
-                                    aria-label="Search">
+                                    aria-label="Search" name="username">
                                 <button class="btn btn-outline-success" type="submit">Search</button>
                             </form>
-                            <!-- <button class="btn m-1  btn-outline-danger" onclick="AddPro()">New</button> -->
-                            
                             <button type="button" class="btn btn-outline-success m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 New
                             </button>
-                            
+
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -62,13 +60,13 @@
                                             <h3 style="color: blue;"></h3>
                                             
                                             <div class="mb-3">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input type="text" class="form-control" id="username" name="username">
+                                                <label class="form-label">Username</label>
+                                                <input type="text" class="form-control"  name="username">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputPassword1" class="form-label">Password</label>
                                                 <input type="password" class="form-control"
-                                                    id="exampleInputPassword1" name="pass">
+                                                    id="exampleInputPassword1" name="password">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email address</label>
@@ -77,6 +75,16 @@
                                                 <div id="emailHelp" class="form-text">We'll never share
                                                     your email with anyone else.</div>
                                             </div>
+                                            <div class="mb-3">
+                                                <label  class="form-label" >Role</label>
+                                                <select class="form-select" name="role">
+                                  
+                                                  <option value="0">User</option>
+                                                  <option value="1">Admin</option>
+                                                 
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-success" data-bs-dismiss="modal">Save</button>
                                             
                         
                                             
@@ -89,7 +97,7 @@
                                     </div>
                                     <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary">Save </button>
+                                    
                                     </div>
                                 </div>
                                 </div>
@@ -101,51 +109,7 @@
             </div>
             
             
-           
-            
-            <div id="formadd" style="display: none;" class="col-6 m-auto">
-                <form method="post" action="">
-                    <h3 style="color: blue;">New Product</h3>
-                    <div class="mb-3">
-                        <label for="fullname" class="form-label">Fullname</label>
-                        <input type="text" class="form-control" id="fullname" name="fullname"
-                            aria-describedby="emailHelp">
-
-                    </div>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control"
-                            id="exampleInputPassword1" name="pass">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email"
-                            aria-describedby="emailHelp" name="email">
-                        <div id="emailHelp" class="form-text">We'll never share
-                            your email with anyone else.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="group" class="form-label">Group</label>
-                        <input type="text" class="form-control" id="group">
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input"
-                            id="status">
-                        <label class="form-check-label" for="exampleCheck1">Status</label>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn m-1  btn-outline-danger" >Save</button>
-                        <button type="submit" class="btn m-1  btn-outline-danger" onclick="outForm">Cancel</button>
-                    </div>
-                    
-                </form>
-            </div>
-            <div class="col-12">
+        <div class="col-12">
                
         <div class="col-12">
             <table class="table">
@@ -153,7 +117,6 @@
                     <tr>
                         <th  scope="col">ID</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Password</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
                         <th scope="col"></th>
@@ -161,18 +124,25 @@
                 </thead>
                 <tbody>
 
-                    <% users.forEach(function(user) { %>
+                    <% users.forEach(function(u) { %>
                         <tr> 
-                            <th scope="row"> <%= user.id %> </th>
-                            <td> <%= user.username%> </td>
-                            <td> <%= user.password %> </td>
-                            <td> <%= user.email %> </td>
-                            <td> <%= user.role %> </td>
-                            <td> 
-                                <button class="btn bg-success-subtle">Edit</button>
-                                <button class="btn bg-dark-subtle">Delete</button>
-    
-                            </td>
+                            <th scope="row">
+                                <a href="/users/edit/<%= u.id %>"><%= u.id %></a>
+                            </th>
+                            <td> <%= u.username%> </td>
+                            <td> <%= u.email %> </td>
+                            <% if (u.role==1) { %>
+                                <td>admin</td>
+                              <% } else { %> 
+                                <td>user</td>
+                                <% } %>
+                            <% if(user=="admin" && u.username!="admin"){ %>
+                                <td>
+                                    <a href="/users/edit/<%= user.id %>" class="btn bg-success-subtle">Edit</a> 
+                                    <a href="/users/delete/<%= user.id %>" class="btn bg-dark-subtle">Delete</a> 
+                                </td>
+                                <% } %>
+                           
                         </tr>
                     <% }); %>
                     
